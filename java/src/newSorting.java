@@ -1,94 +1,46 @@
 public class newSorting {
-    static void mergeSort(int[] a, int left, int right){
-        if (left < right){
 
-            int middle = (left + right) / 2;
+    //Sorts the input array with the quickSort algorithm
+    private static void quickSort(int[] nums, int first, int last) {
 
-            mergeSort(a, left, middle);
-
-            mergeSort(a, middle + 1, right);
-
-            merge(a, left, middle, right);
-        }
-    }
-
-    static void merge(int[] a, int left, int middle, int right) {
-
-        int leftSize = middle - left + 1;
-        int rightSize = right - middle;
-
-        int[] lArray = new int[leftSize];
-        int[] rArray = new int[rightSize];
-
-        for (int i = 0; i < leftSize; i++) {
-            lArray[i] = a[left + i];
-        }
-        for (int j = 0; j < rightSize; j++) {
-            rArray[j] = a[middle + j + 1];
-        }
-
-        int leftIndex = 0; int rightIndex = 0;
-
-        int mergedArrayIndex = left;
-
-        while (leftIndex < leftSize && rightIndex < rightSize){
-            if(lArray[leftIndex] <= rArray[rightIndex] ){
-                a[mergedArrayIndex] = lArray[leftIndex];
-                leftIndex++;
-            }else{
-                a[mergedArrayIndex] = rArray[rightIndex];
-                rightIndex++;
-            }
-            mergedArrayIndex++;
-        }
-
-        while (leftIndex < leftSize){
-            a[mergedArrayIndex] = lArray[leftIndex];
-            leftIndex++;
-            mergedArrayIndex++;
-        }
-
-        while (rightIndex < rightSize){
-            a[mergedArrayIndex] = rArray[rightIndex];
-            rightIndex++;
-            mergedArrayIndex++;
-        }
-
-
-    }
-
-    static  void quickSort(int[] nums, int first, int last){
-
-        if (first >= last){
+        //Base case if the length of the array is one
+        if (first >= last) {
             return;
         }
 
+        //Partition the input array and gets the last index of the low partition
         int k = partition(nums, first, last);
 
-
-
+        //QuickSort the left part of the array
         quickSort(nums, first, k);
 
+        //QuickSort the right size of the array
         quickSort(nums, k + 1, last);
     }
+    /*******************************************************/
+    //Helper method for quickSort that makes the partition of an array and returns thr last index of the lower partition
+    private static int partition(int[] numbers, int first, int last) {
 
-    static int partition(int[] numbers, int first, int last){
+        int pivot = numbers[first]; //The pivot, the value that will be used to do the comparisons
+        int less = first + 1;       //The index for the lower partition, initialized to first index to be partitioned, the one after the pivot
+        int more = last;            //The index for the greater partition, initialized to the last index of the input array
+        int temp = 0;               //Variable to help when swapping elements
 
-        int less = first + 1;
-        int more = last;
-        int pivot = numbers[first];
-        int temp = 0;
+        //Loop that goes until the partition is complete
+        while (less <= more) {
 
-        while(less <= more){
-            while (less <= last && numbers[less] <= pivot){
+            //Increment less until it reaches a value that is greater than the pivot
+            while (less <= last && numbers[less] <= pivot) {
                 less++;
             }
 
-            while (more >= first && numbers[more] > pivot){
+            //Decrement more until it reaches a value smaller than the pivot
+            while (more >= first && numbers[more] > pivot) {
                 more--;
             }
 
-            if (less < more){
+            //If less is less than more, the partition is not complete, swap their values
+            if (less < more) {
                 temp = numbers[less];
                 numbers[less] = numbers[more];
                 numbers[more] = temp;
@@ -96,100 +48,91 @@ public class newSorting {
             }
         }
 
+        //Swap the pivot with the last  element of the lower partition
         temp = numbers[first];
         numbers[first] = numbers[more];
         numbers[more] = temp;
 
+        //Return the index of the last element of the lower partition
         return more;
     }
-    static void newSorting(int[] A, int size){
-        if(A.length <= size){
-            quickSort(A, 0, A.length-1);
-            System.out.println("Sorted: ");
-            printArray(A);
-        }else{
-            int halfIndex = A.length/2;
-            int[] leftArray = new int[(A.length+1)/2];
+    /*******************************************************/
+    //Method that sorts an array recursively using mergeSortedHalves and quickSort
+    public static void newSorting(int[] A, int size) {
+
+        //Base case where the input array is bigger than the desired size
+        if (A.length <= size) {
+            quickSort(A, 0, A.length - 1);
+
+        //Case where the array is divided by the half and then sort them and merge them
+        } else {
+
+            //Create the left and right array
+            int[] leftArray = new int[(A.length + 1) / 2];
             int[] rightArray = new int[A.length - leftArray.length];
 
-            for (int i = 0; i < leftArray.length ; i++) {
+            //Loop copies the left part of the input array
+            for (int i = 0; i < leftArray.length; i++) {
                 leftArray[i] = A[i];
             }
 
+            //Call that sorts the left part by newSorting
             newSorting(leftArray, size);
 
-            for (int i = 0; i < rightArray.length ; i++) {
+            //Loop that copies the right array of the input array
+            for (int i = 0; i < rightArray.length; i++) {
                 rightArray[i] = A[i + leftArray.length];
             }
+
+            //Call that sorts the right part of the array
             newSorting(rightArray, size);
 
+            //Merges the two halves already sorted
             mergeSortedHalves(A, leftArray, rightArray);
         }
 
 
-        }
+    }
+    /*******************************************************/
+    //Method that merges two arrays into another one
 
     private static void mergeSortedHalves(int[] A, int[] leftArray, int[] rightArray) {
-        System.out.println("left Array: ");
-        printArray(leftArray);
-        System.out.println("Right Array: ");
-        printArray(rightArray);
-        int i = 0;
-        int leftPointer = 0;
-        int rightPointer = 0;
-        System.out.println(rightArray.length +leftArray.length);
 
-        while (leftPointer <  leftArray.length && rightPointer < rightArray.length){
-            System.out.println("i is: " + i);
-            if(leftArray[leftPointer] <= rightArray[rightPointer]  ){
+        int i = 0;              //Index of the next element to be inserted on the array
+        int leftPointer = 0;    //Index of the smallest not inserted element on the left array
+        int rightPointer = 0;   //Index of the smallest not inserted element on the right array
+
+        //Loop that inserts sorted elements in the input array until there are elements that have not been inserted in both loops
+        while (leftPointer < leftArray.length && rightPointer < rightArray.length) {
+
+            //If the element on the left array is smaller than the one on the right one, insert the one on the left array, increment leftPointer
+            if (leftArray[leftPointer] <= rightArray[rightPointer]) {
                 A[i] = leftArray[leftPointer];
                 leftPointer++;
-            }else{
+
+            }
+            //Else insert the element on the right array, increment leftPointer
+            else {
                 A[i] = rightArray[rightPointer];
                 rightPointer++;
             }
             i++;
         }
 
-        System.out.println("i after loops:" + i);
-
-        while(leftPointer < leftArray.length){
-            System.out.println("left");
+        //If there are still elements on the left array that have not been inserted, insert them
+        while (leftPointer < leftArray.length) {
             A[i] = leftArray[leftPointer];
             i++;
             leftPointer++;
         }
 
-        while(rightPointer < rightArray.length){
-            System.out.println("right");
+        //If there are still ele,emts on the right array that have not been inserted, insert them
+        while (rightPointer < rightArray.length) {
             A[i] = rightArray[rightPointer];
             i++;
             rightPointer++;
         }
-
-
-
-        System.out.println("Last i: "+ i);
-
-    }
-
-    public static void printArray(int[] A){
-        for (int i = 0; i < A.length; i++) {
-            System.out.print(A[i]);
-        }
-        System.out.println("");
-    }
-
-    public static void main(String[] args) {
-        int[] a = {1,5,3};
-        int[] b = {4,2,6};
-
-        int[] yikes = {1,5,3,4,2,6};//new int[6];
-
-        mergeSortedHalves(yikes, a, b);
-
-        printArray(yikes);
-
     }
 }
+
 

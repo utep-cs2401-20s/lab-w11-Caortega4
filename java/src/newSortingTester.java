@@ -13,7 +13,6 @@ public class newSortingTester {
         int[] test = {5,4,6,2,3,1,7,8};
         int[] expected = {1,2,3,4,5,6,7,8};
         newSorting.newSorting(test, 4);
-        newSorting.printArray(test);
         assertArrayEquals(expected, test);
 
     }
@@ -39,7 +38,6 @@ public class newSortingTester {
         int[] test = {0};
         int[] expected = {0};
         newSorting.newSorting(test,5);
-        newSorting.printArray(test);
         assertArrayEquals(expected, test);
 
     }
@@ -52,7 +50,6 @@ public class newSortingTester {
         int[] test = {};
         int[] expected = {};
         newSorting.newSorting(test,2);
-        newSorting.printArray(test);
         assertArrayEquals(expected, test);
 
     }
@@ -65,7 +62,6 @@ public class newSortingTester {
         int[] test = {1,2,4,5,6,7,8,1,2,4,5,6,7,8,1,7};
         int[] expected = {1,1,1,2,2,4,4,5,5,6,6,7,7,7,8,8};
         newSorting.newSorting(test,2);
-        newSorting.printArray(test);
         assertArrayEquals(expected, test);
 
     }
