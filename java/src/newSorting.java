@@ -1,7 +1,7 @@
 public class newSorting {
 
     //Sorts the input array with the quickSort algorithm
-    private static void quickSort(int[] nums, int first, int last) {
+    private void quickSort(int[] nums, int first, int last) {
 
         //Base case if the length of the array is one
         if (first >= last) {
@@ -19,7 +19,7 @@ public class newSorting {
     }
     /*******************************************************/
     //Helper method for quickSort that makes the partition of an array and returns thr last index of the lower partition
-    private static int partition(int[] numbers, int first, int last) {
+    private int partition(int[] numbers, int first, int last) {
 
         int pivot = numbers[first]; //The pivot, the value that will be used to do the comparisons
         int less = first + 1;       //The index for the lower partition, initialized to first index to be partitioned, the one after the pivot
@@ -58,7 +58,7 @@ public class newSorting {
     }
     /*******************************************************/
     //Method that sorts an array recursively using mergeSortedHalves and quickSort
-    public static void newSorting(int[] A, int size) {
+    public void newSorting(int[] A, int size) {
 
         //Base case where the input array is bigger than the desired size
         if (A.length <= size) {
@@ -96,7 +96,7 @@ public class newSorting {
     /*******************************************************/
     //Method that merges two arrays into another one
 
-    private static void mergeSortedHalves(int[] A, int[] leftArray, int[] rightArray) {
+    private void mergeSortedHalves(int[] A, int[] leftArray, int[] rightArray) {
 
         int i = 0;              //Index of the next element to be inserted on the array
         int leftPointer = 0;    //Index of the smallest not inserted element on the left array
